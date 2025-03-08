@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,19 +8,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="butterfly-bg">
-    <audio autoplay loop>
-        <source src="music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
+    <audio id="background-music" src="music.mp3" autoplay loop></audio>
     <canvas id="Canvas"></canvas>
-    <div class="heart">💖</div>
+    <div class="heart">❤️</div>
     <div class="input-container" id="inputBox">
         <input type="text" id="crushName" placeholder="Enter Anchal...">
         <button onclick="showImages()">Submit</button>
     </div>
     <div class="container" id="imageBox"></div>
-    <div class="compliment-container" id="complimentBox">💕 Always keep Smiling 💕</div>
+    <div class="compliment-container" id="complimentBox">💕 You are the reason my heart beats faster! 💕</div>
     <script src="script.js"></script>
 </body>
 </html>
