@@ -118,7 +118,7 @@ function showImages() {
 }
 
 function displayAnchalImages(imageBox) {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 1; i++) {
         let card = document.createElement("div");
         card.classList.add("card");
         card.innerHTML = `<figure class="image"><img src="" alt="Anchal Image"></figure>`;
