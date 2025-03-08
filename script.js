@@ -143,3 +143,15 @@ function changeCompliments() {
         }, 1000);
     }, 5000);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    let music = document.getElementById("background-music");
+
+    // Attempt to play immediately (some browsers may block it)
+    music.play().catch(() => {
+        // If blocked, wait for user interaction
+        document.addEventListener("click", () => {
+            music.play();
+        }, { once: true });
+    });
+});
