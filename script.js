@@ -1,11 +1,21 @@
+// script.js
 "use strict";
 const { PI: π, E: e, sin, cos, pow, abs } = Math;
 let c, ctx, W, H;
 
+let paused = false;
 let fc = 0;
+let fid = 0;
+
+let r = 0;
 let θ = 0;
-let scf = 70; // Scale factor for butterfly
-let x = 0, y = 0, tempx = 0, tempy = 0;
+let scf = 80; // Increased scale factor for larger curve
+
+let x = 0;
+let y = 0;
+
+let tempx = 0;
+let tempy = 0;
 
 const setup = () => {
     c = document.getElementById("Canvas");
@@ -14,50 +24,44 @@ const setup = () => {
     window.onresize = () => {
         [W, H] = setSize(c, ctx);
         fc = 0;
-    };
+    }
     window.requestAnimationFrame(animate);
-
-    // Background Music
-    let music = new Audio("music.mp3");
-    music.loop = true;
-    document.addEventListener("click", () => {
-        if (music.paused) {
-            music.play();
-        }
-    }, { once: true });
 };
 
 const animate = () => {
-    ctx.fillStyle = `rgb(
+    ctx.fillStyle = ctx.strokeStyle = `rgb(
         ${abs(sin(fc / 360)) * 255},
         ${abs(sin(fc / 360 + π / 6)) * 255},
         ${abs(sin(fc / 360 - π / 6)) * 255}
     )`;
-
     ctx.save();
     ctx.translate(W / 2, H / 2);
     tempx = x;
     tempy = y;
-    let r = pow(e, sin(θ)) - 2 * cos(4 * θ) + pow(sin((2 * θ - π) / 24), 5);
+    r = pow(e, sin(θ)) - 2 * cos(4 * θ) + pow(sin((2 * θ - π) / 24), 5);
     r *= scf;
     x = r * cos(θ);
     y = -r * sin(θ);
-    drawLine(ctx, x, y, tempx, tempy);
+    line(ctx, x, y, tempx, tempy);
     ctx.restore();
-
     θ = fc / 60;
     fc++;
-    window.requestAnimationFrame(animate);
+    fid = window.requestAnimationFrame(animate);
 };
 
-const drawLine = (ctx, x1, y1, x2, y2) => {
+const clear = (ctx = CanvasRenderingContext2D, color = "rgba(0, 0, 0, 1)", w = window.innerWidth, h = window.innerHeight) => {
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, w, h);
+};
+
+const line = (ctx = CanvasRenderingContext2D, x1 = 0, y1 = 0, x2 = 100, y2 = 100) => {
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     ctx.stroke();
 };
 
-const setSize = (c, ctx, w = window.innerWidth, h = window.innerHeight, pd = devicePixelRatio) => {
+const setSize = (c = HTMLCanvasElement, ctx = CanvasRenderingContext2D, w = window.innerWidth, h = window.innerHeight, pd = devicePixelRatio) => {
     c.style.width = `${w}px`;
     c.style.height = `${h}px`;
     c.width = w * pd;
@@ -68,25 +72,22 @@ const setSize = (c, ctx, w = window.innerWidth, h = window.innerHeight, pd = dev
 
 window.onload = setup;
 
-// Compliments and Image Logic
+// Image and Compliment Logic
 let compliments = [
     "💕 Your elegance and grace are truly captivating. ✨💕",
-    "😍 Your presence brings warmth and positivity 😍",
-    "💖 You make the world a better place. 😌💖",
-    "🌟 Even if the sky is falling down, you shine! 🌟",
-    "💘 Keep Smiling! 💘",
-    "🌷 No need to worry, just be happy! 🌷",
-    "🎵 Your beauty is truly mesmerizing! 🎵",
-    "💞 You are the most beautiful soul 💞",
-    "💎 Always be happy and shine bright! 💎",
-    "😍 Your kindness is your true beauty! 😍"
+    "😍Your presence brings a sense of warmth and positivity 😍",
+    "💖Your presence brings a sense of warmth and positivity. 😌💖",
+    "🌟 even if the sky is falling down 🌟",
+    "💘 Keep Smiling 💘",
+    "🌷 no need to worry 🌷",
+    "🎵Your inner beauty radiates and complements your outer beauty. 🎵",
+    "💞 You are most Beautiful 💞",
+    "💎 Always be happy💎",
+    " 😍 Your kind and compassionate nature shines brightly😍 😍 "
 ];
 
 let complimentIndex = 0;
-let anchalImages = [
-    "photo1.png", "photo2.png", "photo3.png", "photo4.png",
-    "photo5.png", "photo6.png", "photo7.png", "photo8.png", "photo9.png"
-];
+let anchalImages = ["photo1.png", "photo2.png", "photo3.png", "photo4.png", "photo5.png", "photo6.png", "photo7.png", "photo8.png", "photo9.png"];
 
 function showImages() {
     let crushName = document.getElementById("crushName").value.trim().toLowerCase();
@@ -96,6 +97,7 @@ function showImages() {
 
     if (crushName === "anchal") {
         inputBox.classList.add("hidden");
+
         setTimeout(() => {
             imageBox.innerHTML = "";
             displayAnchalImages(imageBox);
@@ -109,7 +111,7 @@ function showImages() {
             }, 100);
         }, 500);
     } else {
-        alert("Enter 'Anchal' to see the magic!");
+        alert("Enter Anchal to see the magic!");
     }
 }
 
@@ -117,7 +119,7 @@ function displayAnchalImages(imageBox) {
     for (let i = 0; i < 1; i++) {
         let card = document.createElement("div");
         card.classList.add("card");
-        card.innerHTML = `<figure class="image"><img src="${anchalImages[0]}" alt="Anchal Image"></figure>`;
+        card.innerHTML = `<figure class="image"><img src="" alt="Anchal Image"></figure>`;
         imageBox.appendChild(card);
     }
 }
@@ -144,3 +146,14 @@ function changeCompliments() {
     }, 5000);
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    let music = document.getElementById("background-music");
+
+    music.play().catch(() => {
+        const playMusic = () => {
+            music.play();
+            document.removeEventListener("click", playMusic);
+        };
+        document.addEventListener("click", playMusic);
+    });
+});
