@@ -1,5 +1,4 @@
 "use strict";
-
 const { PI: π, E: e, sin, cos, pow, abs } = Math;
 let c, ctx, W, H;
 
@@ -17,6 +16,15 @@ const setup = () => {
         fc = 0;
     };
     window.requestAnimationFrame(animate);
+
+    // Background Music
+    let music = new Audio("music.mp3");
+    music.loop = true;
+    document.addEventListener("click", () => {
+        if (music.paused) {
+            music.play();
+        }
+    }, { once: true });
 };
 
 const animate = () => {
@@ -59,16 +67,6 @@ const setSize = (c, ctx, w = window.innerWidth, h = window.innerHeight, pd = dev
 };
 
 window.onload = setup;
-
-// Background Music with User Interaction
-let music = new Audio("music.mp3");
-music.loop = true;
-
-document.addEventListener("click", () => {
-    if (music.paused) {
-        music.play();
-    }
-}, { once: true });
 
 // Compliments and Image Logic
 let compliments = [
@@ -116,12 +114,12 @@ function showImages() {
 }
 
 function displayAnchalImages(imageBox) {
-    anchalImages.forEach(imgSrc => {
+    for (let i = 0; i < 1; i++) {
         let card = document.createElement("div");
         card.classList.add("card");
-        card.innerHTML = `<figure class="image"><img src="${imgSrc}" alt="Anchal Image"></figure>`;
+        card.innerHTML = `<figure class="image"><img src="${anchalImages[0]}" alt="Anchal Image"></figure>`;
         imageBox.appendChild(card);
-    });
+    }
 }
 
 function startImageRotation(imageBox) {
