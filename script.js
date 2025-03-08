@@ -10,7 +10,7 @@ let fid = 0;
 
 let r = 0;
 let θ = 0;
-let scf = 50; // Increased scale factor for larger curve
+let scf = 70; // Increased scale factor for larger curve
 
 let x = 0;
 let y = 0;
