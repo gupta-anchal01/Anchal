@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,10 +9,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="butterfly-bg">
+    <audio autoplay loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <canvas id="Canvas"></canvas>
     <div class="heart">💖</div>
     <div class="input-container" id="inputBox">
-        <!-- <h2 style="background-color: white;">Enter Your Name 💖 to see the magic </h2> -->
         <input type="text" id="crushName" placeholder="Enter Anchal...">
         <button onclick="showImages()">Submit</button>
     </div>
